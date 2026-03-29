@@ -55,7 +55,28 @@ html_page = """<!DOCTYPE html>
 <head>
 <title>Amazon Review Analyzer</title>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const sentimentChart = new Chart(document.getElementById('sentimentChart'), {
+    type: 'pie',
+    data: {
+        labels: ['Positive', 'Negative'],
+        datasets: [{
+            data: [{{ positive }}, {{ negative }}]
+        }]
+    }
+});
+
+const featureChart = new Chart(document.getElementById('featureChart'), {
+    type: 'bar',
+    data: {
+        labels: {{ features.keys() | list | tojson }},
+        datasets: [{
+            label: 'Mentions',
+            data: {{ features.values() | list | tojson }}
+        }]
+    }
+});
+</script>
 
 <style>
 body {
